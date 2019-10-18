@@ -4,11 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, ExtCtrls, AccountUnit;
+  Dialogs, StdCtrls, ExtCtrls, AccountUnit, RadioButton1, ComCtrls;
 
 type
   TFrame3 = class(TFrame)
-    Panel5: TPanel;
     account_panel_: TPanel;
     account_listbox_: TListBox;
     info_panel_: TPanel;
@@ -48,8 +47,6 @@ type
     account_array_ : AccountArray;
     current_account_ : TAccount;
 
-
-      
   end;
 
 implementation

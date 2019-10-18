@@ -8,7 +8,6 @@ uses
 
 type
   TFrame2 = class(TFrame)
-    Panel6: TPanel;
     GroupBox1: TGroupBox;
     default_proxy_radiobutton_: TRadioButton;
     no_proxy_radiobutton_: TRadioButton;
