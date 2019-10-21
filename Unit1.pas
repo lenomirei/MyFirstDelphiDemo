@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, AccountUnit, NetworkFrame, AccountFrame,
+  Dialogs, StdCtrls, ExtCtrls, AccountUnit, NetworkFrameUnit, AccountFrameUnit,
   RadioButton1, Button1, ComCtrls;
 
 type
@@ -24,13 +24,11 @@ type
       var AllowChange: Boolean);
   private
     { Private declarations }
-
+    FAccountFrame : TAccountFrame;
+    FNetworkFrame : TNetworkFrame;
     procedure InitializeFrames();
   public
     { Public declarations }
-    account_frame_ : TFrame3;
-    network_frame_ : TFrame2;
-
   end;
 
 var
@@ -43,8 +41,6 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Self.Caption := '系统设置';
-
-  // 将radiobutton和frame对应起来会比较好
   InitializeFrames();
 end;
 
@@ -60,24 +56,24 @@ end;
 
 procedure TForm1.InitializeFrames();
 begin
-  account_frame_ := TFrame3.Create(Self);
-  account_frame_.Left := 0;
-  account_frame_.Top := 0;
-  account_frame_.Height := 633;
-  account_frame_.Width := 1377;
-  account_frame_.Parent := TabSheet1;
-  network_frame_ := TFrame2.Create(Self);
-  network_frame_.Left := 0;
-  network_frame_.Top := 0;
-  network_frame_.Height := 633;
-  network_frame_.Width := 1377;
-  network_frame_.Parent := TabSheet2;
+  FAccountFrame := TAccountFrame.Create(Self);
+  FAccountFrame.Left := 0;
+  FAccountFrame.Top := 0;
+  FAccountFrame.Height := 633;
+  FAccountFrame.Width := 1377;
+  FAccountFrame.Parent := TabSheet1;
+  FNetworkFrame := TNetworkFrame.Create(Self);
+  FNetworkFrame.Left := 0;
+  FNetworkFrame.Top := 0;
+  FNetworkFrame.Height := 633;
+  FNetworkFrame.Width := 1377;
+  FNetworkFrame.Parent := TabSheet2;
 end;
 
 procedure TForm1.PageControl1Changing(Sender: TObject;
   var AllowChange: Boolean);
 begin
-  network_frame_.account_array_ := account_frame_.account_array_;
+  FNetworkFrame.AccountArray := FAccountFrame.AccountArray;
 end;
 
 end.

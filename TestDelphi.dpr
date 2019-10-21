@@ -4,8 +4,8 @@ uses
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
   AccountUnit in 'AccountUnit.pas',
-  NetworkFrame in 'NetworkFrame.pas' {Frame2: TFrame},
-  AccountFrame in 'AccountFrame.pas' {Frame3: TFrame};
+  NetworkFrameUnit in 'NetworkFrameUnit.pas' {NetworkFrame: TFrame},
+  AccountFrameUnit in 'AccountFrameUnit.pas' {AccountFrame: TFrame};
 
 {$R *.res}
 
