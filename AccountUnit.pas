@@ -17,7 +17,7 @@ type
 
     proxytype : TProxyType;
     end;
-   AccountArray = array[0..1] of TAccount;
+   TAccountArray = array[0..1] of TAccount;
 implementation
 
 end.
