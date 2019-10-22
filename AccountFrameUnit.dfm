@@ -39,6 +39,7 @@ object AccountFrame: TAccountFrame
     Height = 25
     Caption = #21024#38500
     TabOrder = 3
+    OnClick = FDeleteButtonClick
   end
   object FAccountInfoPanel: TPanel
     Left = 224

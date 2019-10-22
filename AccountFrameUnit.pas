@@ -33,6 +33,7 @@ type
     procedure FAccountListboxClick(Sender: TObject);
     procedure FTimerCheckboxClick(Sender: TObject);
     procedure FActivatedComboboxChange(Sender: TObject);
+    procedure FDeleteButtonClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -65,7 +66,7 @@ begin
     InitializeComboBox();
     InitializeAccountListBox();
     FAccountListbox.ItemIndex := 0;
-    CurrentAccount := FAccountListbox.ItemIndex;
+    CurrentAccount^ := FAccountListbox.ItemIndex;
     UpdateInfoPanel();
   end
   else
@@ -94,20 +95,20 @@ end;
 
 procedure TAccountFrame.FAccountListboxClick(Sender: TObject);
 begin
-  CurrentAccount := (Sender as TListBox).ItemIndex;
+  CurrentAccount^ := (Sender as TListBox).ItemIndex;
   UpdateInfoPanel();
 end;
 
 procedure TAccountFrame.UpdateInfoPanel();
 begin
-  FEmailAddressEdit.Text := AccountArray[CurrentAccount].emailaddress;
-  FPassworkEdit.Text := AccountArray[CurrentAccount].password;
-  FDisplayNameEdit.Text := AccountArray[CurrentAccount].displayname;
-  FSendNameEdit.Text := AccountArray[CurrentAccount].sendname;
-  FActivatedCombobox.ItemIndex := ord(AccountArray[CurrentAccount].activatedstatus);
-  FTimerCheckbox.Checked := AccountArray[CurrentAccount].timedcollect;
-  FSyncContactsCheckbox.Checked := AccountArray[CurrentAccount].synccontacts;
-  FSyncCalendarCheckbox.Checked := AccountArray[CurrentAccount].synccalendar;
+  FEmailAddressEdit.Text := AccountArray[CurrentAccount^].emailaddress;
+  FPassworkEdit.Text := AccountArray[CurrentAccount^].password;
+  FDisplayNameEdit.Text := AccountArray[CurrentAccount^].displayname;
+  FSendNameEdit.Text := AccountArray[CurrentAccount^].sendname;
+  FActivatedCombobox.ItemIndex := ord(AccountArray[CurrentAccount^].activatedstatus);
+  FTimerCheckbox.Checked := AccountArray[CurrentAccount^].timedcollect;
+  FSyncContactsCheckbox.Checked := AccountArray[CurrentAccount^].synccontacts;
+  FSyncCalendarCheckbox.Checked := AccountArray[CurrentAccount^].synccalendar;
   EnableCheckboxs();
 end;
 
@@ -144,12 +145,17 @@ end;
 
 procedure TAccountFrame.ApplyAccountInfo();
 begin
-  AccountArray[CurrentAccount].activatedstatus := TActivateStatus(FActivatedCombobox.ItemIndex);
+  AccountArray[CurrentAccount^].activatedstatus := TActivateStatus(FActivatedCombobox.ItemIndex);
 end;
 
 constructor TAccountFrame.Create(AOwner:TComponent);
 begin
   inherited Create(AOwner);
 end; 
+
+procedure TAccountFrame.FDeleteButtonClick(Sender: TObject);
+begin
+  FAccountListbox.Items.Delete(FAccountListbox.ItemIndex);
+end;
 
 end.
