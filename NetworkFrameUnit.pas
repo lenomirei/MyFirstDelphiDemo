@@ -40,7 +40,7 @@ type
     CurrentAccount : PInteger;
     AccountArray : TAccountArray;
 
-    constructor Create(AOwner:TComponent);overload;
+    constructor Create(AOwner:TComponent; VarAccountArray : TAccountArray; PtrCurrentAccount : PInteger);reintroduce;
 
     procedure ApplyAccountInfo();
     procedure SetCurrentAccount();
@@ -131,10 +131,12 @@ begin
   // case
 end;
 
-constructor TNetworkFrame.Create(AOwner:TComponent);
+constructor TNetworkFrame.Create(AOwner:TComponent; VarAccountArray : TAccountArray; PtrCurrentAccount : PInteger);
 begin
   inherited Create(AOwner);
-
+  AccountArray := VarAccountArray;
+  CurrentAccount := PtrCurrentAccount;
+  InitializeAccountComboBox();
 end;
 
 procedure TNetworkFrame.SetCurrentAccount();

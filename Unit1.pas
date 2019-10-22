@@ -46,8 +46,8 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Self.Caption := 'œµÕ≥…Ë÷√';
-  InitializeFrames();
   InitializeAccounts();
+  InitializeFrames();
 end;
 
 procedure TForm1.FCancelButtonClick(Sender: TObject);
@@ -62,18 +62,19 @@ end;
 
 procedure TForm1.InitializeFrames();
 begin
-  FAccountFrame := TAccountFrame.Create(Self);
+  FAccountFrame := TAccountFrame.Create(Self, AccountArray, @CurrentAccount);
   FAccountFrame.Left := 0;
   FAccountFrame.Top := 0;
   FAccountFrame.Height := 633;
   FAccountFrame.Width := 1377;
   FAccountFrame.Parent := TabSheet1;
-  FNetworkFrame := TNetworkFrame.Create(Self);
+  FNetworkFrame := TNetworkFrame.Create(Self, AccountArray, @CurrentAccount);
   FNetworkFrame.Left := 0;
   FNetworkFrame.Top := 0;
   FNetworkFrame.Height := 633;
   FNetworkFrame.Width := 1377;
   FNetworkFrame.Parent := TabSheet2;
+
 end;
 
 procedure TForm1.PageControl1Changing(Sender: TObject;
@@ -81,7 +82,6 @@ procedure TForm1.PageControl1Changing(Sender: TObject;
 begin
   FNetworkFrame.AccountArray := FAccountFrame.AccountArray;
   FNetworkFrame.CurrentAccount := @CurrentAccount;
-  FNetworkFrame.InitializeAccountComboBox();
   FNetworkFrame.SetCurrentAccount();
 end;
 
@@ -116,10 +116,7 @@ begin
   AccountArray[1].proxytype := CUSTOMPROXY;
 
   CurrentAccount := 0;
-  FAccountFrame.AccountArray := AccountArray;
-  FAccountFrame.CurrentAccount := @CurrentAccount;
-  FNetworkFrame.AccountArray := AccountArray;
-  FNetworkFrame.CurrentAccount := @CurrentAccount;
+
 end;
 
 procedure TForm1.FApplyButtonClick(Sender: TObject);

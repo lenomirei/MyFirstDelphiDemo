@@ -47,7 +47,7 @@ type
     AccountArray : TAccountArray;
     CurrentAccount : PInteger;
     procedure ApplyAccountInfo();
-    constructor Create(AOwner:TComponent);overload;
+    constructor Create(AOwner : TComponent; VarAccountArray : TAccountArray; PCurrentAccount : PInteger);reintroduce;
 
   end;
 
@@ -148,9 +148,11 @@ begin
   AccountArray[CurrentAccount^].activatedstatus := TActivateStatus(FActivatedCombobox.ItemIndex);
 end;
 
-constructor TAccountFrame.Create(AOwner:TComponent);
+constructor TAccountFrame.Create(AOwner : TComponent; VarAccountArray : TAccountArray; PCurrentAccount : PInteger);
 begin
   inherited Create(AOwner);
+  AccountArray := VarAccountArray;
+  CurrentAccount := PCurrentAccount;
 end; 
 
 procedure TAccountFrame.FDeleteButtonClick(Sender: TObject);
