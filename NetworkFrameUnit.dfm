@@ -5,14 +5,17 @@ object NetworkFrame: TNetworkFrame
   Height = 420
   Align = alTop
   Anchors = [akLeft, akTop, akRight, akBottom]
+  Constraints.MinHeight = 420
+  Constraints.MinWidth = 640
   TabOrder = 0
   object FNetworkGroupbox: TGroupBox
-    Left = 31
-    Top = 40
-    Width = 578
-    Height = 337
+    Left = 24
+    Top = 32
+    Width = 590
+    Height = 345
+    Align = alCustom
     Caption = #24080#21495#65306
-    TabOrder = 1
+    TabOrder = 0
     object FDefaultProxyRadiobutton: TRadioButton
       Left = 48
       Top = 48
@@ -133,15 +136,15 @@ object NetworkFrame: TNetworkFrame
           'SOCKS 5')
       end
     end
-  end
-  object FAccountCombobox: TComboBox
-    Left = 72
-    Top = 40
-    Width = 121
-    Height = 21
-    Style = csDropDownList
-    ItemHeight = 13
-    TabOrder = 0
-    OnChange = FAccountComboboxChange
+    object FAccountCombobox: TComboBox
+      Left = 40
+      Top = 0
+      Width = 121
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 5
+      OnChange = FAccountComboboxChange
+    end
   end
 end

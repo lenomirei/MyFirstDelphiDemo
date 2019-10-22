@@ -7,6 +7,7 @@ uses
   Dialogs, StdCtrls, ExtCtrls, AccountUnit;
 
 type
+  PInteger = ^integer;
   TNetworkFrame = class(TFrame)
     FNetworkGroupbox: TGroupBox;
     FDefaultProxyRadiobutton: TRadioButton;
@@ -30,13 +31,20 @@ type
     procedure FAccountComboboxChange(Sender: TObject);
   private
     { Private declarations }
-    procedure InitializeAccountComboBox();
+
     procedure InitializeRadioButton();
     procedure EnableGroupBox(enable : Boolean);
+    function GetProxyType():TProxyType;
   public
     { Public declarations }
-    CurrentAccount : TAccount;
+    CurrentAccount : PInteger;
     AccountArray : TAccountArray;
+
+    constructor Create(AOwner:TComponent);overload;
+
+    procedure ApplyAccountInfo();
+    procedure SetCurrentAccount();
+    procedure InitializeAccountComboBox();
   end;
 
 implementation
@@ -51,7 +59,6 @@ begin
 
   if Showing then
   begin
-    InitializeAccountComboBox();
     InitializeRadioButton();
   end
   else
@@ -69,8 +76,7 @@ begin
     FAccountCombobox.Items.Add(AccountArray[i].emailaddress);
   end;
 
-  FAccountCombobox.ItemIndex := 0;
-  FAccountComboboxChange(FAccountCombobox);
+  SetCurrentAccount();
 end;
 
 procedure TNetworkFrame.InitializeRadioButton();
@@ -113,6 +119,28 @@ begin
   begin
     FProxyServerSettingGroupbox.Controls[i].Enabled := enable;
   end;
+end;
+
+procedure TNetworkFrame.ApplyAccountInfo();
+begin
+  //CurrentAccount.proxytype :=  ;
+end;
+
+function TNetworkFrame.GetProxyType():TProxyType;
+begin
+  // case
+end;
+
+constructor TNetworkFrame.Create(AOwner:TComponent);
+begin
+  inherited Create(AOwner);
+
+end;
+
+procedure TNetworkFrame.SetCurrentAccount();
+begin
+  FAccountCombobox.ItemIndex := CurrentAccount^;
+  FAccountComboboxChange(FAccountCombobox);
 end;
 
 end.

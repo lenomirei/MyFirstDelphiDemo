@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 1081
-  Top = 422
-  AutoScroll = False
+  Left = 1829
+  Top = 369
+  BorderStyle = bsDialog
   Caption = #31995#32479#35774#32622
   ClientHeight = 495
   ClientWidth = 648
@@ -26,7 +26,7 @@ object Form1: TForm1
     DesignSize = (
       648
       50)
-    object Button4: TButton
+    object FConfirmButton: TButton
       Left = 383
       Top = 15
       Width = 75
@@ -34,9 +34,9 @@ object Form1: TForm1
       Anchors = [akRight]
       Caption = #30830#23450
       TabOrder = 0
-      OnClick = Button4Click
+      OnClick = FConfirmButtonClick
     end
-    object Button5: TButton
+    object FCancelButton: TButton
       Left = 471
       Top = 15
       Width = 75
@@ -44,9 +44,9 @@ object Form1: TForm1
       Anchors = [akRight]
       Caption = #21462#28040
       TabOrder = 1
-      OnClick = Button5Click
+      OnClick = FCancelButtonClick
     end
-    object Button6: TButton
+    object FApplyButton: TButton
       Left = 559
       Top = 15
       Width = 75
@@ -54,6 +54,7 @@ object Form1: TForm1
       Anchors = [akRight]
       Caption = #24212#29992
       TabOrder = 2
+      OnClick = FApplyButtonClick
     end
   end
   object PageControl1: TPageControl
@@ -68,6 +69,10 @@ object Form1: TForm1
     OnChanging = PageControl1Changing
     object TabSheet1: TTabSheet
       Caption = #24080#21495
+      Constraints.MaxHeight = 420
+      Constraints.MaxWidth = 640
+      Constraints.MinHeight = 420
+      Constraints.MinWidth = 640
     end
     object TabSheet2: TTabSheet
       Caption = #32593#32476
