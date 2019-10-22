@@ -10,25 +10,30 @@ uses
 type
   TForm1 = class(TForm)
     Panel4: TPanel;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
+    FConfirmButton: TButton;
+    FCancelButton: TButton;
+    FApplyButton: TButton;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     procedure FormCreate(Sender: TObject);
 
-    procedure Button5Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure FCancelButtonClick(Sender: TObject);
+    procedure FConfirmButtonClick(Sender: TObject);
     procedure PageControl1Changing(Sender: TObject;
       var AllowChange: Boolean);
+    procedure FApplyButtonClick(Sender: TObject);
   private
     { Private declarations }
     FAccountFrame : TAccountFrame;
     FNetworkFrame : TNetworkFrame;
     procedure InitializeFrames();
+    procedure ApplyAccountInfo();
+    procedure InitializeAccounts();
   public
     { Public declarations }
+    CurrentAccount : integer;
+    AccountArray : TAccountArray;
   end;
 
 var
@@ -42,14 +47,15 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   Self.Caption := 'œµÕ≥…Ë÷√';
   InitializeFrames();
+  InitializeAccounts();
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.FCancelButtonClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.FConfirmButtonClick(Sender: TObject);
 begin
   Close;
 end;
@@ -74,6 +80,54 @@ procedure TForm1.PageControl1Changing(Sender: TObject;
   var AllowChange: Boolean);
 begin
   FNetworkFrame.AccountArray := FAccountFrame.AccountArray;
+  FNetworkFrame.CurrentAccount := @CurrentAccount;
+  FNetworkFrame.InitializeAccountComboBox();
+  FNetworkFrame.SetCurrentAccount();
+end;
+
+procedure TForm1.ApplyAccountInfo();
+begin
+  if PageControl1.ActivePageIndex = 1 then
+    FAccountFrame.ApplyAccountInfo()
+  else
+    FNetworkFrame.ApplyAccountInfo();
+end;
+
+procedure TForm1.InitializeAccounts();
+begin
+  AccountArray[0].emailaddress := 'foxmail@foxmail.com';
+  AccountArray[0].password := 'foxmail';
+  AccountArray[0].displayname := 'foxmail(foxmail)';
+  AccountArray[0].sendname := 'foxmail@foxmail.com';
+  AccountArray[0].activatedstatus := NOTACTIVATED;
+  AccountArray[0].timedcollect := true;
+  AccountArray[0].synccontacts := false;
+  AccountArray[0].synccalendar := false;
+  AccountArray[0].proxytype := DEFAULTPROXY;
+
+  AccountArray[1].emailaddress := 'test@foxmail.com';
+  AccountArray[1].password := 'test';
+  AccountArray[1].displayname := 'test(test)';
+  AccountArray[1].sendname := 'test@foxmail.com';
+  AccountArray[1].activatedstatus := ACTIVATED;
+  AccountArray[1].timedcollect := true;
+  AccountArray[1].synccontacts := true;
+  AccountArray[1].synccalendar := false;
+  AccountArray[1].proxytype := CUSTOMPROXY;
+
+  CurrentAccount := 0;
+  FAccountFrame.AccountArray := AccountArray;
+  FAccountFrame.CurrentAccount := @CurrentAccount;
+  FNetworkFrame.AccountArray := AccountArray;
+  FNetworkFrame.CurrentAccount := @CurrentAccount;
+end;
+
+procedure TForm1.FApplyButtonClick(Sender: TObject);
+begin
+  if PageControl1.ActivePageIndex = 0 then
+    FAccountFrame.ApplyAccountInfo()
+  else
+    FNetworkFrame.ApplyAccountInfo();
 end;
 
 end.

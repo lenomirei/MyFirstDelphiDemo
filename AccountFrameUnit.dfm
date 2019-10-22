@@ -4,6 +4,8 @@ object AccountFrame: TAccountFrame
   Width = 640
   Height = 420
   Align = alTop
+  Constraints.MinHeight = 420
+  Constraints.MinWidth = 640
   TabOrder = 0
   object FAccountListbox: TListBox
     Left = 24
@@ -61,14 +63,14 @@ object AccountFrame: TAccountFrame
     object TDisplayNameLabel: TLabel
       Left = 24
       Top = 96
-      Width = 65
+      Width = 60
       Height = 13
       Caption = #26174#31034#21517#31216#65306
     end
     object TSendNameLabel: TLabel
       Left = 24
       Top = 128
-      Width = 65
+      Width = 60
       Height = 13
       Caption = #21457#20449#21517#31216#65306
     end
@@ -80,7 +82,7 @@ object AccountFrame: TAccountFrame
       Caption = #27599#38548
     end
     object Label6: TLabel
-      Left = 288
+      Left = 296
       Top = 192
       Width = 24
       Height = 13
@@ -137,11 +139,15 @@ object AccountFrame: TAccountFrame
     object FTimerCombobox: TComboBox
       Left = 248
       Top = 184
-      Width = 33
-      Height = 19
-      Style = csSimple
+      Width = 41
+      Height = 21
+      Style = csDropDownList
       ItemHeight = 13
+      ItemIndex = 0
       TabOrder = 6
+      Text = '15'
+      Items.Strings = (
+        '15')
     end
     object FSyncContactsCheckbox: TCheckBox
       Left = 104

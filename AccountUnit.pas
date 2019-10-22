@@ -18,6 +18,7 @@ type
     proxytype : TProxyType;
     end;
    TAccountArray = array[0..1] of TAccount;
+   PAccount = ^TAccount;
 implementation
 
 end.

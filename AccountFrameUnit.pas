@@ -7,6 +7,7 @@ uses
   Dialogs, StdCtrls, ExtCtrls, AccountUnit, RadioButton1, ComCtrls;
 
 type
+  PInteger = ^integer;
   TAccountFrame = class(TFrame)
     FAccountListbox: TListBox;
     FAccountInfoPanel: TPanel;
@@ -35,9 +36,7 @@ type
 
   private
     { Private declarations }
-
     procedure InitializeComboBox();
-    procedure InitializeAccounts();
     procedure InitializeAccountListBox();
     procedure UpdateInfoPanel();
     procedure EnableCheckboxs();
@@ -45,38 +44,15 @@ type
   public
     { Public declarations }
     AccountArray : TAccountArray;
-    CurrentAccount : TAccount;
+    CurrentAccount : PInteger;
+    procedure ApplyAccountInfo();
+    constructor Create(AOwner:TComponent);overload;
 
   end;
 
 implementation
 
 {$R *.dfm}
-
-procedure TAccountFrame.InitializeAccounts();
-begin
-  AccountArray[0].emailaddress := 'foxmail@foxmail.com';
-  AccountArray[0].password := 'foxmail';
-  AccountArray[0].displayname := 'foxmail(foxmail)';
-  AccountArray[0].sendname := 'foxmail@foxmail.com';
-  AccountArray[0].activatedstatus := NOTACTIVATED;
-  AccountArray[0].timedcollect := true;
-  AccountArray[0].synccontacts := false;
-  AccountArray[0].synccalendar := false;
-  AccountArray[0].proxytype := DEFAULTPROXY;
-
-  AccountArray[1].emailaddress := 'test@foxmail.com';
-  AccountArray[1].password := 'test';
-  AccountArray[1].displayname := 'test(test)';
-  AccountArray[1].sendname := 'test@foxmail.com';
-  AccountArray[1].activatedstatus := ACTIVATED;
-  AccountArray[1].timedcollect := true;
-  AccountArray[1].synccontacts := true;
-  AccountArray[1].synccalendar := false;
-  AccountArray[1].proxytype := CUSTOMPROXY;
-
-  CurrentAccount := AccountArray[0];
-end;
 
 procedure TAccountFrame.CMShowingChanged(var Mess: TMessage);
 var
@@ -87,10 +63,10 @@ begin
   if Showing then
   begin
     InitializeComboBox();
-    InitializeAccounts();
     InitializeAccountListBox();
     FAccountListbox.ItemIndex := 0;
-    FAccountListboxClick(FAccountListbox);
+    CurrentAccount := FAccountListbox.ItemIndex;
+    UpdateInfoPanel();
   end
   else
   begin
@@ -118,20 +94,20 @@ end;
 
 procedure TAccountFrame.FAccountListboxClick(Sender: TObject);
 begin
-  CurrentAccount := AccountArray[(Sender as TListBox).ItemIndex];
+  CurrentAccount := (Sender as TListBox).ItemIndex;
   UpdateInfoPanel();
 end;
 
 procedure TAccountFrame.UpdateInfoPanel();
 begin
-  FEmailAddressEdit.Text := CurrentAccount.emailaddress;
-  FPassworkEdit.Text := CurrentAccount.password;
-  FDisplayNameEdit.Text := CurrentAccount.displayname;
-  FSendNameEdit.Text := CurrentAccount.sendname;
-  FActivatedCombobox.ItemIndex := ord(CurrentAccount.activatedstatus);
-  FTimerCheckbox.Checked := CurrentAccount.timedcollect;
-  FSyncContactsCheckbox.Checked := CurrentAccount.synccontacts;
-  FSyncCalendarCheckbox.Checked := CurrentAccount.synccalendar;
+  FEmailAddressEdit.Text := AccountArray[CurrentAccount].emailaddress;
+  FPassworkEdit.Text := AccountArray[CurrentAccount].password;
+  FDisplayNameEdit.Text := AccountArray[CurrentAccount].displayname;
+  FSendNameEdit.Text := AccountArray[CurrentAccount].sendname;
+  FActivatedCombobox.ItemIndex := ord(AccountArray[CurrentAccount].activatedstatus);
+  FTimerCheckbox.Checked := AccountArray[CurrentAccount].timedcollect;
+  FSyncContactsCheckbox.Checked := AccountArray[CurrentAccount].synccontacts;
+  FSyncCalendarCheckbox.Checked := AccountArray[CurrentAccount].synccalendar;
   EnableCheckboxs();
 end;
 
@@ -151,20 +127,29 @@ begin
     FSyncCalendarCheckbox.Enabled := true;
   end;
   if FTimerCheckbox.Checked and FTimerCheckbox.Enabled then
-    FTimerCheckbox.Enabled := true
+    FTimerCombobox.Enabled := true
   else
-    FTimerCheckbox.Enabled := false;
+    FTimerCombobox.Enabled := false;
 end;
 
 procedure TAccountFrame.FTimerCheckboxClick(Sender: TObject);
 begin
-  FTimerCheckbox.Enabled := (Sender as TCheckbox).Checked;
+  FTimerCombobox.Enabled := (Sender as TCheckbox).Checked;
 end;
 
 procedure TAccountFrame.FActivatedComboboxChange(Sender: TObject);
 begin
-  CurrentAccount.activatedstatus := TActivateStatus((Sender as TComboBox).ItemIndex);
   EnableCheckboxs();
 end;
+
+procedure TAccountFrame.ApplyAccountInfo();
+begin
+  AccountArray[CurrentAccount].activatedstatus := TActivateStatus(FActivatedCombobox.ItemIndex);
+end;
+
+constructor TAccountFrame.Create(AOwner:TComponent);
+begin
+  inherited Create(AOwner);
+end; 
 
 end.
